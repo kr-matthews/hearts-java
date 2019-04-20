@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 class Round {
 
   private int[] roundScores = { 0, 0, 0, 0 };
@@ -35,6 +37,12 @@ class Round {
     for (int i = 0; i < 52; i++) {
       playerHands[i % 4].add(deck.get(i));
     }
+
+    for (int player = 0; player < 4; player++) {
+      Collections.sort(playerHands[player], new CardComparator());
+      System.out.print("Player " + player +"'s hand: ");
+      System.out.println(playerHands[player]);
+    }
   }
 
   public void playtrick(Game game, int firstPlayer) {
@@ -43,6 +51,7 @@ class Round {
     Card[] cardsPlayed = new Card[4];
     for (int player = 0; player < 4; player++) {
       playCard(game, cardsPlayed, player % 4);
+      //temp
       System.out.println(cardsPlayed[player]);
     }
 
@@ -51,5 +60,7 @@ class Round {
   private void playCard(Game game, Card[] cardsPlayed, int player) {
     // temp
     cardsPlayed[player] = playerHands[player].get(0);
+    playerHands[player].remove(cardsPlayed[player]);
+    System.out.println(playerHands[player]);
   }
 }

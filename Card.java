@@ -1,16 +1,37 @@
+import java.util.Comparator;
+
+class CardComparator implements Comparator<Card> {
+
+  public int compare(Card c1, Card c2) {
+    if (c1.getSuit().equals(c2.getSuit())) {
+      return new RankComparator().compare(c1.getRank(), c2.getRank());
+    } else {
+      return new SuitComparator().compare(c1.getSuit(), c2.getSuit());
+    }
+  }
+}
+
 public class Card {
 
-  private int rank;
+  private Rank rank;
   private Suit suit;
 
-  public Card(int rank, Suit suit) {
+  public Rank getRank() {
+    return rank;
+  }
+
+  public Suit getSuit() {
+    return suit;
+  }
+
+  public Card(Rank rank, Suit suit) {
     this.suit = suit;
     this.rank = rank;
   }
 
   @Override
   public String toString() {
-    return rank + " of " + suit;
+    return rank.toString() + suit.toString();
   }
 
   @Override

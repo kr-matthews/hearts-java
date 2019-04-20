@@ -8,12 +8,13 @@ public class Deck extends ArrayList<Card> {
     super(52);
     
     for (Suit suit: Suit.values()) {
-      for (int rank=1;rank<=13;rank++) {
+      for (Rank rank: Rank.values()) {
         this.add(new Card(rank,suit));
       }
     }
     
     Collections.shuffle(this);
+    //temp
     System.out.println("Deck is: " + this);
   }
   
