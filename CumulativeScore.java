@@ -13,8 +13,8 @@ public class CumulativeScore {
     scores.add(player4Score);
   }
 
-  public List<Integer> getScores() {
-    return scores;
+  public int getScore(int player) {
+    return scores.get(player);
   }
 
   @Override

@@ -17,8 +17,12 @@ public class RoundScore {
     }
   }
 
-  public int[] getScores() {
-    return scores;
+  public int getScore(int player) {
+    return scores[player];
+  }
+
+  public void setScore(int player, int score) {
+    scores[player] = score;
   }
 
   public int whoShotTheMoon() {
