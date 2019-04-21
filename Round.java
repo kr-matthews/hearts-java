@@ -39,8 +39,8 @@ class Round {
     }
 
     for (int player = 0; player < 4; player++) {
-      Collections.sort(playerHands[player], new CardComparator());
-      System.out.print("Player " + player +"'s hand: ");
+      Collections.sort(playerHands[player]);
+      System.out.print("Player " + player + "'s hand: ");
       System.out.println(playerHands[player]);
     }
   }
@@ -49,9 +49,10 @@ class Round {
     System.err.println("TODO: play trick; play 4 cards and update scores");
     System.out.println("Next Player: " + firstPlayer);
     Card[] cardsPlayed = new Card[4];
+
     for (int player = 0; player < 4; player++) {
       playCard(game, cardsPlayed, player % 4);
-      //temp
+      // temp
       System.out.println(cardsPlayed[player]);
     }
 
@@ -61,6 +62,5 @@ class Round {
     // temp
     cardsPlayed[player] = playerHands[player].get(0);
     playerHands[player].remove(cardsPlayed[player]);
-    System.out.println(playerHands[player]);
   }
 }

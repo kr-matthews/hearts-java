@@ -18,9 +18,15 @@ public class Hearts {
     while (!game.isGameOver()) {
       // while the game is not over (nobody has reached 100 points) play another round
       game.playRound();
+      
+      System.out.println("\nScores:");
+      //System.err.println(game.getPlayers());
+      System.out.println(game.getGameScoresHistory());
     }
     
-    System.err.println("TODO: Display results and winner.");
+    System.out.println("\nWinner: ???");
+    System.out.println("Scores:");
+    System.out.println(game.getGameScoresHistory());
   }
 
 }

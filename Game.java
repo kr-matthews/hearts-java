@@ -23,10 +23,13 @@ public class Game {
     List<Integer> newCumulativeScores = new ArrayList<Integer>(4);
     for (int player = 0; player < 4; player++) {
       if (gameScoresHistory.size() > 0) {
-        // if this is not the first round, then add given round scores to current game scores
-        newCumulativeScores.add(gameScoresHistory.get(gameScoresHistory.size() - 1).get(player) + roundScores.get(player));
+        // if this is not the first round, then add given round scores to current game
+        // scores
+        newCumulativeScores
+            .add(gameScoresHistory.get(gameScoresHistory.size() - 1).get(player) + roundScores.get(player));
       } else {
-        // if this is the first round, then just insert the round score as the game score
+        // if this is the first round, then just insert the round score as the game
+        // score
         newCumulativeScores.add(roundScores.get(player));
       }
     }
@@ -67,31 +70,33 @@ public class Game {
   }
 
   public void playRound() {
-    // the process of playing a round (dealing out 4 hands, playing 13 tricks, tallying scores)
+    // the process of playing a round (dealing out 4 hands, playing 13 tricks,
+    // tallying scores)
     // should round be variable directly in the game class ("currentRound")?
     Round round = new Round(new Deck());
-    // who won the previous hand, to determine who goes first next hand
-    
+
     // need to do passing 3 cards! (most rounds)
     System.err.println("TODO: Pass 3 cards left/right/across/nowhere");
-    
-    int trickWinner = -1;
+
+    // who won the previous hand, to determine who goes first next hand
+    // for the first hand, this will be whoever has the 2 of CLUBS
+    int nextToPlay = -1;
     for (int player = 0; player < 4; player++) {
-      // for the first round, set trick1winner to whoever has the 2 of SPADES
-      if (round.getPlayerHand(player).contains(new Card(Rank.N2, Suit.SPADES))) {
-        trickWinner = player;
+      if (round.getPlayerHand(player).contains(new Card(Rank.N2, Suit.CLUBS))) {
+        nextToPlay = player;
       }
     }
 
     while (!round.isRoundOver()) {
       // while the round is not over (players still have cards), play a trick
-      round.playtrick(this, trickWinner);
+      round.playtrick(this, nextToPlay);
 
       // temp
       round.roundIsOver();
     }
 
     System.err.println("TODO: update scores");
+    //addToGameScoresHistory(round.get....);
     // temp
     gameOver = true;
   }

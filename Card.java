@@ -1,17 +1,4 @@
-import java.util.Comparator;
-
-class CardComparator implements Comparator<Card> {
-
-  public int compare(Card c1, Card c2) {
-    if (c1.getSuit().equals(c2.getSuit())) {
-      return new RankComparator().compare(c1.getRank(), c2.getRank());
-    } else {
-      return new SuitComparator().compare(c1.getSuit(), c2.getSuit());
-    }
-  }
-}
-
-public class Card {
+public class Card implements Comparable<Card> {
 
   private Rank rank;
   private Suit suit;
@@ -35,6 +22,15 @@ public class Card {
   }
 
   @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((rank == null) ? 0 : rank.hashCode());
+    result = prime * result + ((suit == null) ? 0 : suit.hashCode());
+    return result;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
@@ -50,4 +46,12 @@ public class Card {
     return true;
   }
 
+  @Override
+  public int compareTo(Card card) {
+    int suitOrder = this.getSuit().compareTo(card.getSuit());
+    if (suitOrder == 0) {
+      return this.getRank().compareTo(card.getRank());
+    }
+    return suitOrder;
+  }
 }
