@@ -12,11 +12,16 @@ public class Trick {
     firstToPlay = player;
   }
 
+  public int getNumberOfCardsPlayed() {
+    return cardsPlayed.size();
+  }
+
   // can only be called after the first player has played (bad? alternatives?)
   public Suit getLeadSuit() {
     return cardsPlayed.get(0).getSuit();
   }
 
+  // assumes all four cards have been played, finds trick winner
   public int getWinner() {
     // the index, in order of cards played, of winner so far
     int winnerSoFarIndex = 0;
@@ -31,18 +36,21 @@ public class Trick {
     return (winnerSoFarIndex + firstToPlay) % 4;
   }
 
+  // add the next played card
   public void playCard(Card card) {
     cardsPlayed.add(card);
   }
 
+  // how many points does the trick contain
+  // works no matter how many cards have been played
   public int getPoints() {
     int points = 0;
     for (Card card : cardsPlayed) {
       // iterate over all 4 cards played
-      if (card.getSuit().equals(Suit.HEARTS)) {
+      if (card.isHeart()) {
         // if the card was a heart then add a point
         points += 1;
-      } else if (card.equals(new Card(Rank.Q, Suit.SPADES))) {
+      } else if (card.isQueenOfSpades()) {
         // if the card was the queen of spades then add 13 points
         points += 13;
       }

@@ -16,6 +16,8 @@ public class Game {
 
   public boolean isGameOver() {
     return cumulativeHistory.getMaxScore() >= 100;
+    // temp line
+    // return cumulativeHistory.getRoundNumber() > 1;
   }
 
   public Game(String player1, String player2, String player3, String player4) {
@@ -35,7 +37,6 @@ public class Game {
     this("You");
   }
 
-  // TODO
   public void playRound() {
     // the process of playing a round (dealing out 4 hands, playing 13 tricks,
     // tallying scores, updating game history)
@@ -56,7 +57,8 @@ public class Game {
     while (!currentRound.isRoundOver()) {
       // while the round is not over (players still have cards (13 tricks)), play a
       // trick
-      currentRound.playtrick(nextToPlay);
+      currentRound.playtrick(nextToPlay, playerNames);
+      // want the below to be inside the above method, but that's problematic
       nextToPlay = currentRound.currentTrickWinner();
     }
 

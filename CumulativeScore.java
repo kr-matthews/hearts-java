@@ -18,7 +18,7 @@ public class CumulativeScore implements Iterable<Integer> {
     return scores.get(player);
   }
 
-  @Override // TODO: imrprove
+  @Override // TODO: improve
   public String toString() {
     return "CumulativeScore " + scores;
   }
