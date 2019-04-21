@@ -16,8 +16,6 @@ public class Game {
 
   public boolean isGameOver() {
     return cumulativeHistory.getMaxScore() >= 100;
-    // temp below:
-    // return cumulativeHistory.getRoundNumber() > 2;
   }
 
   public Game(String player1, String player2, String player3, String player4) {
@@ -58,7 +56,8 @@ public class Game {
     while (!currentRound.isRoundOver()) {
       // while the round is not over (players still have cards (13 tricks)), play a
       // trick
-      currentRound.playtrick(this, nextToPlay);
+      currentRound.playtrick(nextToPlay);
+      nextToPlay = currentRound.currentTrickWinner();
     }
 
     cumulativeHistory.addRoundScore(currentRound.getRoundScores());
@@ -99,7 +98,10 @@ public class Game {
         System.out.print(" & ");
       }
     }
-    System.out.println("!");
+    if (winners().contains(0)) {
+      System.out.print("!");
+    }
+    System.out.println();
   }
 
   // TODO: improve formatting

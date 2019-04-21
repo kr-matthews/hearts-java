@@ -46,13 +46,13 @@ class Round {
     for (int player = 0; player < 4; player++) {
       Collections.sort(playerHands[player]);
       // temp 2 lines
-      System.out.print("Player " + player + "'s hand: ");
+      System.out.print("(temp) Player " + player + "'s hand: ");
       System.out.println(playerHands[player]);
     }
   }
 
   // TODO: finish this function (or "method")
-  public void playtrick(Game game, int firstPlayer) {
+  public void playtrick(int firstPlayer) {
     // temp line
     System.out.println("First to play: " + firstPlayer);
     currentTrick = new Trick(firstPlayer);
@@ -74,6 +74,10 @@ class Round {
     System.out.println("Points: " + currentTrick.getPoints());
     System.out.println();
 
+  }
+
+  public int currentTrickWinner() {
+    return currentTrick.getWinner();
   }
 
   private void playCard(int player) {

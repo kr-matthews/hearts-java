@@ -18,8 +18,17 @@ public class Trick {
   }
 
   public int getWinner() {
-    // temp
-    return firstToPlay;
+    // the index, in order of cards played, of winner so far
+    int winnerSoFarIndex = 0;
+    // skip the first card played because we initialize to that being winner so far
+    for (int index = 1; index < 4; index++) {
+      if (cardsPlayed.get(winnerSoFarIndex).getSuit().equals(cardsPlayed.get(index).getSuit())
+          & cardsPlayed.get(winnerSoFarIndex).compareTo(cardsPlayed.get(index)) < 0) {
+        winnerSoFarIndex = index;
+      }
+    }
+    // now adjust based on which player played first
+    return (winnerSoFarIndex + firstToPlay) % 4;
   }
 
   public void playCard(Card card) {
@@ -29,13 +38,16 @@ public class Trick {
   public int getPoints() {
     int points = 0;
     for (Card card : cardsPlayed) {
+      // iterate over all 4 cards played
       if (card.getSuit().equals(Suit.HEARTS)) {
+        // if the card was a heart then add a point
         points += 1;
-      } else if (card.equals(new Card(Rank.Q,Suit.SPADES))) {
+      } else if (card.equals(new Card(Rank.Q, Suit.SPADES))) {
+        // if the card was the queen of spades then add 13 points
         points += 13;
       }
     }
     return points;
   }
-  
+
 }
