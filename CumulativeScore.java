@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class CumulativeScore {
+public class CumulativeScore implements Iterable<Integer> {
 
   // the scores, starting with user and going clockwise
   private List<Integer> scores = new ArrayList<Integer>(4);
@@ -20,5 +21,10 @@ public class CumulativeScore {
   @Override
   public String toString() {
     return "CumulativeScore " + scores;
+  }
+
+  @Override
+  public Iterator<Integer> iterator() {
+    return scores.iterator();
   }
 }

@@ -45,30 +45,35 @@ class Round {
 
     for (int player = 0; player < 4; player++) {
       Collections.sort(playerHands[player]);
-      //temp 2 lines
+      // temp 2 lines
       System.out.print("Player " + player + "'s hand: ");
       System.out.println(playerHands[player]);
     }
   }
 
-  // TODO: need to look at and probably completely redo
   public void playtrick(Game game, int firstPlayer) {
-    System.err.println("TODO: play trick; play 4 cards and update scores");
-    System.out.println("Next Player: " + firstPlayer);
-    Card[] cardsPlayed = new Card[4];
+    // temp line
+    System.out.println("First to play: " + firstPlayer);
+    currentTrick = new Trick(firstPlayer);
 
-    for (int player = 0; player < 4; player++) {
-      playCard(game, cardsPlayed, player % 4);
-      // temp
-      System.out.println(cardsPlayed[player]);
+    // each player plays a card in turn
+    for (int player = firstPlayer; player < firstPlayer + 4; player++) {
+      playCard(player % 4);
     }
+
+    // see who won the trick; update their score and set them as next to play
 
   }
 
-  // TODO: need to do
-  private void playCard(Game game, Card[] cardsPlayed, int player) {
-    // temp
-    cardsPlayed[player] = playerHands[player].get(0);
-    playerHands[player].remove(cardsPlayed[player]);
+  private void playCard(int player) {
+    // TODO: temp cardToPlay assignment; need to actually pick a proper card
+    Card cardToPlay = playerHands[player].get(0);
+    currentTrick.playCard(cardToPlay);
+    playerHands[player].remove(cardToPlay);
+    System.out.println("Player " + player + " plays " + cardToPlay);
+  }
+
+  public void passThreeCards(int roundNumber) {
+    // TODO: actually pass cards
   }
 }

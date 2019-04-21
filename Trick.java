@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Trick {
 
-  // who plays the first card
+  // who plays the first card, set by constructor
   private int firstToPlay;
   // cards played so far, in order played
   private List<Card> cardsPlayed = new ArrayList<Card>(4);
@@ -20,5 +20,9 @@ public class Trick {
   public int getWinner() {
     // temp
     return firstToPlay;
+  }
+  
+  public void playCard(Card card) {
+    cardsPlayed.add(card);
   }
 }

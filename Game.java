@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
   // names of players, set by constructor
@@ -12,6 +15,10 @@ public class Game {
     for (String name : playerNames) {
       System.out.print(name + " ");
     }
+  }
+
+  public String getPlayerName(int player) {
+    return playerNames[player];
   }
 
   public CumulativeHistory getCumulativeHistory() {
@@ -47,8 +54,9 @@ public class Game {
     // tallying scores, updating cumulative history)
     currentRound = new Round(new Deck());
 
-    // need to do passing 3 cards! (most rounds)
+    // pass 3 cards left/right/across/nowhere/...
     System.err.println("TODO: Pass 3 cards left/right/across/nowhere");
+    currentRound.passThreeCards(cumulativeHistory.getRoundNumber());
 
     // the player to start the next trick is the one who won the previous trick
     // (for the first hand, this will be whoever has the 2 of CLUBS)
@@ -70,6 +78,47 @@ public class Game {
     printPlayerNames();
     System.out.println();
     cumulativeHistory.printScoreHistory();
+  }
+
+  public boolean playerWins(int player) {
+    return isGameOver() & cumulativeHistory.getCurrentScore().getScore(player) == winningScore();
+  }
+
+  private int winningScore() {
+    CumulativeScore currentScores = cumulativeHistory.getCurrentScore();
+    return Math.min(Math.min(currentScores.getScore(0), currentScores.getScore(1)),
+        Math.min(currentScores.getScore(2), currentScores.getScore(3)));
+  }
+
+  public List<Integer> winners() {
+    List<Integer> winners = new ArrayList<Integer>(4);
+    for (int player = 0; player < 4; player++) {
+      if (playerWins(player)) {
+        winners.add(player);
+      }
+    }
+    return winners;
+  }
+
+  public void displayWinners() {
+    System.out.print("\nWinner");
+    if (winners().size() > 1) {
+      System.out.print("s");
+    }
+    System.out.print(": ");
+    for (int player : winners()) {
+      System.out.print(getPlayerName(player));
+      if (player != winners().get(winners().size() - 1)) {
+        System.out.print(" & ");
+      }
+    }
+    System.out.println("!");
+  }
+
+  public void displayHistory() {
+    for (CumulativeScore scores : cumulativeHistory) {
+      System.out.println(scores);
+    }
   }
 
 }

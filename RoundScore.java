@@ -1,9 +1,10 @@
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class RoundScore {
+public class RoundScore implements Iterable<Integer> {
 
   // the scores, starting with user and going clockwise
-  private int[] scores = new int[4];
+  private Integer[] scores = new Integer[4];
 
   RoundScore() {
     for (int player = 0; player < 4; player++) {
@@ -39,5 +40,10 @@ public class RoundScore {
   @Override
   public String toString() {
     return "RoundScore [" + Arrays.toString(scores) + "]";
+  }
+
+  @Override
+  public Iterator<Integer> iterator() {
+    return Arrays.asList(scores).iterator();
   }
 }

@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class CumulativeHistory {
+public class CumulativeHistory implements Iterable<CumulativeScore> {
   // list of score at the end of each previous round
   private List<CumulativeScore> previousRoundScores = new ArrayList<CumulativeScore>(15);
 
@@ -68,6 +69,11 @@ public class CumulativeHistory {
   private boolean wouldShootingLoseGame(int player) {
     // TODO: easy enough, but want a nice clean way
     return false;
+  }
+
+  @Override
+  public Iterator<CumulativeScore> iterator() {
+    return previousRoundScores.iterator();
   }
 
 }
