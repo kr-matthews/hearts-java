@@ -26,10 +26,8 @@ public class CumulativeHistory implements Iterable<CumulativeScore> {
   // TODO: improve spacing/formatting
   public void printScoreHistory() {
     for (CumulativeScore scores : previousRoundScores) {
-      // could implement an iterator for the class CumulativeScore and use an enhanced
-      // for loop
-      for (int player = 0; player < 4; player++) {
-        System.out.print(scores.getScore(player) + "  ");
+      for (int score : scores) {
+        System.out.print(score + "  ");
       }
       System.out.println();
     }

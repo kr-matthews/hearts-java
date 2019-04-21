@@ -8,27 +8,16 @@ public class Game {
   // contains the information of all previous rounds
   private CumulativeHistory cumulativeHistory = new CumulativeHistory();
   // the current round
-  private Round currentRound;
-
-  // TODO: improve spacing/formatting
-  public void printPlayerNames() {
-    for (String name : playerNames) {
-      System.out.print(name + " ");
-    }
-  }
+  private Round currentRound;  
 
   public String getPlayerName(int player) {
     return playerNames[player];
   }
 
-  public CumulativeHistory getCumulativeHistory() {
-    return cumulativeHistory;
-  }
-
   public boolean isGameOver() {
     // return cumulativeHistory.getMaxScore() >= 100);
     // temp
-    return cumulativeHistory.getRoundNumber() > 1;
+    return cumulativeHistory.getRoundNumber() > 2;
   }
 
   public Game(String player1, String player2, String player3, String player4) {
@@ -51,11 +40,10 @@ public class Game {
   // TODO
   public void playRound() {
     // the process of playing a round (dealing out 4 hands, playing 13 tricks,
-    // tallying scores, updating cumulative history)
+    // tallying scores, updating game history)
     currentRound = new Round(new Deck());
 
     // pass 3 cards left/right/across/nowhere/...
-    System.err.println("TODO: Pass 3 cards left/right/across/nowhere");
     currentRound.passThreeCards(cumulativeHistory.getRoundNumber());
 
     // the player to start the next trick is the one who won the previous trick
@@ -72,12 +60,10 @@ public class Game {
       currentRound.playtrick(this, nextToPlay);
     }
 
-    System.err.println("TODO: update scores, display scores to user");
+    System.err.println("TODO: update scores");
     cumulativeHistory.addRoundScore(currentRound.getRoundScores());
     System.out.println();
-    printPlayerNames();
-    System.out.println();
-    cumulativeHistory.printScoreHistory();
+    displayHistory();
   }
 
   public boolean playerWins(int player) {
@@ -91,15 +77,16 @@ public class Game {
   }
 
   public List<Integer> winners() {
-    List<Integer> winners = new ArrayList<Integer>(4);
+    List<Integer> winnerList = new ArrayList<Integer>(4);
     for (int player = 0; player < 4; player++) {
       if (playerWins(player)) {
-        winners.add(player);
+        winnerList.add(player);
       }
     }
-    return winners;
+    return winnerList;
   }
 
+  // feels messy
   public void displayWinners() {
     System.out.print("\nWinner");
     if (winners().size() > 1) {
@@ -115,7 +102,12 @@ public class Game {
     System.out.println("!");
   }
 
+  // TODO: improve formatting
   public void displayHistory() {
+    for (String player : playerNames) {
+      System.out.print(player + "  ");
+    }
+    System.out.println();
     for (CumulativeScore scores : cumulativeHistory) {
       System.out.println(scores);
     }

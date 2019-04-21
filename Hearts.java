@@ -1,13 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-
 // most of this hasn't been revisiting since restructuring to include Score/History classes
 
 public class Hearts {
 
   public static void main(String[] args) {
 
-    System.out.println("TESTING");
+    System.err.println("TESTING START");
     // Testing
     CumulativeHistory hist = new CumulativeHistory();
 
@@ -41,11 +38,11 @@ public class Hearts {
     // this should cause 26 to be subtracted from East
     System.out.println(hist.getCurrentScore());
     hist.printScoreHistory();
-    System.out.println("TESING END");
+    System.err.println("TESING END");
     System.out.println();
     // end testing
 
-    System.err.println("TODO: Get user's name here.");
+    System.out.println("TODO: Get user's name here, and other names if wanted.");
 
     Game game = new Game();
 
@@ -54,8 +51,10 @@ public class Hearts {
       game.playRound();
     }
 
+    System.out.println();
     game.displayWinners();
-    
+
+    System.out.println();
     game.displayHistory();
 
   }

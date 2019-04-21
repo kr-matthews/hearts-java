@@ -37,7 +37,7 @@ public class RoundScore implements Iterable<Integer> {
     return shootingPlayer;
   }
 
-  @Override
+  @Override // TODO: improve
   public String toString() {
     return "RoundScore [" + Arrays.toString(scores) + "]";
   }

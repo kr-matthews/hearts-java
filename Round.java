@@ -11,8 +11,8 @@ class Round {
 
   // essentially whether hearts have been broken: false iff no or all hearts have
   // been played
-  // better to have an instance variable and set it to true once somebody plays a
-  // heart??
+  // is it better to have an instance variable and set it to true once somebody
+  // plays a heart?
   public boolean canLeadHeart() {
     return (roundScores.getScore(0) + roundScores.getScore(1) + roundScores.getScore(2) + roundScores.getScore(3))
         % 13 != 0;
@@ -75,5 +75,6 @@ class Round {
 
   public void passThreeCards(int roundNumber) {
     // TODO: actually pass cards
+    System.out.println("TODO: Pass 3 cards left/right/across/nowhere (round " + roundNumber + ")");
   }
 }
