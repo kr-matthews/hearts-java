@@ -1,3 +1,4 @@
+
 // most of this hasn't been revisiting since restructuring to include Score/History classes
 
 import java.util.Collections;
@@ -30,7 +31,7 @@ class Round {
   public Hand getPlayerHand(int player) {
     return playerHands[player];
   }
-  
+
   public RoundScore getRoundScores() {
     return roundScores;
   }

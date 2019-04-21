@@ -1,15 +1,12 @@
 // most of this hasn't been revisiting since restructuring to include Score/History classes
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
 
   // names of players, set by constructor
   private String[] playerNames = new String[4];
   // contains the information of all previous rounds
   private CumulativeHistory cumulativeHistory = new CumulativeHistory();
-  
+
   // used to terminate the while loop once a player reaches at least 100 points
   private boolean gameOver = false;
 
@@ -20,16 +17,8 @@ public class Game {
     }
   }
 
-  public String[] getPlayers() {
-    return playerNames;
-  }
-  
   public CumulativeHistory getCumulativeHistory() {
     return cumulativeHistory;
-  }
-
-  public void setPlayers(String[] players) {
-    this.playerNames = players;
   }
 
   public boolean isGameOver() {
@@ -59,7 +48,7 @@ public class Game {
   public void playRound() {
     // the process of playing a round (dealing out 4 hands, playing 13 tricks,
     // tallying scores)
-    // should round be variable directly in the game class ("currentRound")?
+    // should round be instance variable directly in the game class ("currentRound")?
     Round round = new Round(new Deck());
 
     // need to do passing 3 cards! (most rounds)
