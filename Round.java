@@ -1,8 +1,10 @@
+// most of this hasn't been revisiting since restructuring to include Score/History classes
+
 import java.util.Collections;
 
 class Round {
 
-  private int[] roundScores = { 0, 0, 0, 0 };
+  private RoundScore roundScores = new RoundScore();
 
   private Hand[] playerHands = new Hand[4];
 
@@ -27,6 +29,10 @@ class Round {
 
   public Hand getPlayerHand(int player) {
     return playerHands[player];
+  }
+  
+  public RoundScore getRoundScores() {
+    return roundScores;
   }
 
   public Round(Deck deck) {

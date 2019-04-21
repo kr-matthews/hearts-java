@@ -1,48 +1,35 @@
+// most of this hasn't been revisiting since restructuring to include Score/History classes
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
   // names of players, set by constructor
-  private String[] players = new String[4];
+  private String[] playerNames = new String[4];
+  // contains the information of all previous rounds
+  private CumulativeHistory cumulativeHistory = new CumulativeHistory();
+  
   // used to terminate the while loop once a player reaches at least 100 points
   private boolean gameOver = false;
 
-  // position i has the cumulative scores of each player up to the end of ith
-  // round
-  private List<List<Integer>> gameScoresHistory = null;
-  // don't need this because it's just the final entry in gameScoresHistory
-  // private int[] gameScores = { 0, 0, 0, 0 };
-
-  public List<List<Integer>> getGameScoresHistory() {
-    return gameScoresHistory;
-  }
-
-  public void addToGameScoresHistory(List<Integer> roundScores) {
-    // the new list of scores to add to the history
-    List<Integer> newCumulativeScores = new ArrayList<Integer>(4);
-    for (int player = 0; player < 4; player++) {
-      if (gameScoresHistory.size() > 0) {
-        // if this is not the first round, then add given round scores to current game
-        // scores
-        newCumulativeScores
-            .add(gameScoresHistory.get(gameScoresHistory.size() - 1).get(player) + roundScores.get(player));
-      } else {
-        // if this is the first round, then just insert the round score as the game
-        // score
-        newCumulativeScores.add(roundScores.get(player));
-      }
+  // TODO: improve spacing/formatting
+  public void printPlayerNames() {
+    for (String name : playerNames) {
+      System.out.print(name + " ");
     }
-    // actually add new scores to game scores history
-    gameScoresHistory.add(newCumulativeScores);
   }
 
   public String[] getPlayers() {
-    return players;
+    return playerNames;
+  }
+  
+  public CumulativeHistory getCumulativeHistory() {
+    return cumulativeHistory;
   }
 
   public void setPlayers(String[] players) {
-    this.players = players;
+    this.playerNames = players;
   }
 
   public boolean isGameOver() {
@@ -53,10 +40,10 @@ public class Game {
   // private Round currentRound = new Round(new Deck());
 
   public Game(String player1, String player2, String player3, String player4) {
-    players[0] = player1;
-    players[1] = player2;
-    players[2] = player3;
-    players[3] = player4;
+    playerNames[0] = player1;
+    playerNames[1] = player2;
+    playerNames[2] = player3;
+    playerNames[3] = player4;
   }
 
   public Game(String player1) {
@@ -95,8 +82,12 @@ public class Game {
       round.roundIsOver();
     }
 
-    System.err.println("TODO: update scores");
-    //addToGameScoresHistory(round.get....);
+    System.err.println("TODO: update scores, display scores to user");
+    cumulativeHistory.addRoundScore(round.getRoundScores());
+    System.out.println();
+    printPlayerNames();
+    System.out.println();
+    cumulativeHistory.printScoreHistory();
     // temp
     gameOver = true;
   }
