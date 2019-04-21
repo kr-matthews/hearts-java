@@ -8,16 +8,16 @@ public class Game {
   // contains the information of all previous rounds
   private CumulativeHistory cumulativeHistory = new CumulativeHistory();
   // the current round
-  private Round currentRound;  
+  private Round currentRound;
 
   public String getPlayerName(int player) {
     return playerNames[player];
   }
 
   public boolean isGameOver() {
-    // return cumulativeHistory.getMaxScore() >= 100);
-    // temp
-    return cumulativeHistory.getRoundNumber() > 2;
+    return cumulativeHistory.getMaxScore() >= 100;
+    // temp below:
+    // return cumulativeHistory.getRoundNumber() > 2;
   }
 
   public Game(String player1, String player2, String player3, String player4) {
@@ -56,11 +56,11 @@ public class Game {
     }
 
     while (!currentRound.isRoundOver()) {
-      // while the round is not over (players still have cards), play a trick
+      // while the round is not over (players still have cards (13 tricks)), play a
+      // trick
       currentRound.playtrick(this, nextToPlay);
     }
 
-    System.err.println("TODO: update scores");
     cumulativeHistory.addRoundScore(currentRound.getRoundScores());
     System.out.println();
     displayHistory();

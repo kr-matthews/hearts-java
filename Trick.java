@@ -25,4 +25,17 @@ public class Trick {
   public void playCard(Card card) {
     cardsPlayed.add(card);
   }
+
+  public int getPoints() {
+    int points = 0;
+    for (Card card : cardsPlayed) {
+      if (card.getSuit().equals(Suit.HEARTS)) {
+        points += 1;
+      } else if (card.equals(new Card(Rank.Q,Suit.SPADES))) {
+        points += 13;
+      }
+    }
+    return points;
+  }
+  
 }

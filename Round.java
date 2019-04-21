@@ -51,6 +51,7 @@ class Round {
     }
   }
 
+  // TODO: finish this function (or "method")
   public void playtrick(Game game, int firstPlayer) {
     // temp line
     System.out.println("First to play: " + firstPlayer);
@@ -61,13 +62,24 @@ class Round {
       playCard(player % 4);
     }
 
-    // see who won the trick; update their score and set them as next to play
+    // see who won the trick
+    int winner = currentTrick.getWinner();
+    // update their score
+    roundScores.setScore(winner, roundScores.getScore(winner) + currentTrick.getPoints());
+    // set them as first player for next trick
+    firstPlayer = winner;
+
+    // temp lines
+    System.out.println("Winner: " + winner);
+    System.out.println("Points: " + currentTrick.getPoints());
+    System.out.println();
 
   }
 
   private void playCard(int player) {
     // TODO: temp cardToPlay assignment; need to actually pick a proper card
     Card cardToPlay = playerHands[player].get(0);
+
     currentTrick.playCard(cardToPlay);
     playerHands[player].remove(cardToPlay);
     System.out.println("Player " + player + " plays " + cardToPlay);

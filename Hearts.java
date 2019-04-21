@@ -38,7 +38,7 @@ public class Hearts {
     // this should cause 26 to be subtracted from East
     System.out.println(hist.getCurrentScore());
     hist.printScoreHistory();
-    System.err.println("TESING END");
+    System.err.println("TESTING END");
     System.out.println();
     // end testing
 
@@ -53,9 +53,6 @@ public class Hearts {
 
     System.out.println();
     game.displayWinners();
-
-    System.out.println();
-    game.displayHistory();
 
   }
 
