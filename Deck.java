@@ -18,8 +18,8 @@ public class Deck extends ArrayList<Card> {
 
     Collections.shuffle(this);
     // temp 2 lines
-    System.out.println();
-    System.out.println("(temp) Deck is: " + this);
+    //System.out.println();
+    //System.out.println("(temp) Deck is: " + this);
   }
 
 }

@@ -4,6 +4,7 @@ public class Hearts {
 
   public static void main(String[] args) {
 
+    /*
     System.err.println("TESTING START");
     // Testing
     CumulativeHistory hist = new CumulativeHistory();
@@ -41,6 +42,7 @@ public class Hearts {
     System.err.println("TESTING END");
     System.out.println();
     // end testing
+    */
 
     System.out.println("TODO: Get user's name here, and other names if wanted.");
 

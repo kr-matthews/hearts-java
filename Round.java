@@ -1,4 +1,5 @@
 import java.util.Collections;
+import java.util.Scanner;
 
 class Round {
 
@@ -51,8 +52,8 @@ class Round {
     for (int player = 0; player < 4; player++) {
       Collections.sort(getPlayerHand(player));
       // temp 2 lines
-      System.out.print("(temp) Player " + player + "'s hand: ");
-      System.out.println(getPlayerHand(player));
+      // System.out.print("(temp) Player " + player + "'s hand: ");
+      // System.out.println(getPlayerHand(player));
     }
   }
 
@@ -83,29 +84,74 @@ class Round {
   }
 
   private void playCard(int player, String playerName) {
-    // TODO: temp cardToPlay assignment; need to let user pick a card (and give
-    // other automated players a better strategy maybe)
+    // the card to be played
     Card cardToPlay = Deck.TWO_OF_CLUBS;
-    for (Card card : getPlayerHand(player)) {
-      if (validCardToPlay(player, card)) {
-        cardToPlay = card;
-      }
+
+    // if it's not the user, apply built-in strategy
+    if (player != 0) {
+      cardToPlay = computerStrategy(player, getPlayerHand(player), roundScores);
     }
 
-    // temp line
-    // System.out.println("Player " + player + " attempting to play " + cardToPlay);
+    if (player == 0) {
+      cardToPlay = getPlayerHand(player).get(getUserCardIndex());
+    }
 
     currentTrick.playCard(cardToPlay);
     getPlayerHand(player).remove(cardToPlay);
-    System.out.println(playerName + " plays " + cardToPlay + ", (temp) remaining hand: " + getPlayerHand(player));
+    System.out.println(playerName + " plays " + cardToPlay);
+    //System.out.println("(temp) remaining hand: " + getPlayerHand(player));
+  }
+
+  // as below, not sure where this belongs
+  private int getUserCardIndex() {
+    int index = 0;
+    System.out.println();
+    for (int i = 0; i < getPlayerHand(0).size(); i++) {
+      System.out.print((i + 1) + ": " + getPlayerHand(0).get(i) + "  ");
+    }
+    System.out.println();
+
+    // this is probably terrible
+    Scanner in = new Scanner(System.in);
+    do {
+      do {
+        System.out.println("Please select the index of a card from your hand to play:");
+        try {
+          index = in.nextInt();
+        } catch (Exception e) {
+          in.nextLine();
+        }
+      } while (index < 1 || index > getPlayerHand(0).size());
+    } while (!validCardToPlay(0, getPlayerHand(0).get(index - 1), true));
+    
+    // why doesn't this line work?
+    //in.close();
+
+    return index - 1;
+  }
+
+  // this feels like the wrong way/place to do/put a strategy
+  // really it also needs the current score in addition to these arguments
+  // these shouldn't have access to other player's hands
+  // TODO: improve computer strategy
+  private Card computerStrategy(int player, Hand playerHand, RoundScore roundScores2) {
+    Card cardToPlay = Deck.TWO_OF_CLUBS;
+    for (Card card : playerHand) {
+      if (validCardToPlay(player, card, false)) {
+        cardToPlay = card;
+      }
+    }
+    return cardToPlay;
   }
 
   // check if player is allowed to play selected card
   // if false, print out message explaining why not allowed
-  public boolean validCardToPlay(int player, Card card) {
+  public boolean validCardToPlay(int player, Card card, boolean printWarning) {
     // you must play a card from your hand
     if (!getPlayerHand(player).contains(card)) {
-//      System.out.println("You don't have that card in your hand.");
+      if (printWarning) {
+        System.out.println("You don't have that card in your hand.");
+      }
       return false;
     }
 
@@ -114,7 +160,9 @@ class Round {
       if (getPlayerHand(player).hasSuit(currentTrick.getLeadSuit())
           & !currentTrick.getLeadSuit().equals(card.getSuit())) {
         // if not leading and you can follow suit then you must
-//        System.out.println("You must follow the lead suit.");
+        if (printWarning) {
+          System.out.println("You must follow the lead suit.");
+        }
         return false;
       }
     }
@@ -123,21 +171,28 @@ class Round {
       // if this is the first trick of the round...
       if (currentTrick.getNumberOfCardsPlayed() == 0 & !card.equals(Deck.TWO_OF_CLUBS)) {
         // ...and you are leading then you must play the 2 of clubs
-//        System.out.println("You must lead the first trick with the 2 of clubs.");
+        if (printWarning) {
+          System.out.println("You must lead the first trick with the 2 of clubs.");
+        }
         return false;
       }
       if (card.isPointCard() & !getPlayerHand(player).isAllPoints()) {
         // ...then you can't play points (unless only have points)
-//        System.out.println("You can't play a point card on the opening trick.");
+        if (printWarning) {
+          System.out.println("You can't play a point card on the opening trick.");
+        }
         return false;
       }
       // otherwise this isn't the first trick of the round;
-      
+
     } else if (currentTrick.getNumberOfCardsPlayed() == 0) {
       // if you are leading (and it's not the first trick)...
       if (!canLeadHeart() & card.isHeart() & !getPlayerHand(player).isAllHearts()) {
-        // ... and hearts aren't broken then you can't play a heart (unless you only have hearts)
-//        System.out.println("You cannot lead with a heart until hearts have been broken.");
+        // ... and hearts aren't broken then you can't play a heart (unless you only
+        // have hearts)
+        if (printWarning) {
+          System.out.println("You cannot lead with a heart until hearts have been broken.");
+        }
         return false;
       }
     }
@@ -147,5 +202,6 @@ class Round {
   public void passThreeCards(int roundNumber) {
     // TODO: actually pass cards
     System.out.println("TODO: Pass 3 cards left/right/across/nowhere (round " + roundNumber + ")");
+    System.out.println();
   }
 }
