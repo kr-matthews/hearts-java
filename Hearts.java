@@ -49,7 +49,7 @@ public class Hearts {
     Game game = new Game();
 
     while (!game.isGameOver()) {
-      // while the game is not over (nobody has reached 100 points) play another round
+      // while the game is not over play another round
       game.playRound();
     }
 

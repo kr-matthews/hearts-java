@@ -99,13 +99,12 @@ class Round {
     currentTrick.playCard(cardToPlay);
     getPlayerHand(player).remove(cardToPlay);
     System.out.println(playerName + " plays " + cardToPlay);
-    //System.out.println("(temp) remaining hand: " + getPlayerHand(player));
+    // System.out.println("(temp) remaining hand: " + getPlayerHand(player));
   }
 
   // as below, not sure where this belongs
   private int getUserCardIndex() {
     int index = 0;
-    System.out.println();
     for (int i = 0; i < getPlayerHand(0).size(); i++) {
       System.out.print((i + 1) + ": " + getPlayerHand(0).get(i) + "  ");
     }
@@ -123,9 +122,9 @@ class Round {
         }
       } while (index < 1 || index > getPlayerHand(0).size());
     } while (!validCardToPlay(0, getPlayerHand(0).get(index - 1), true));
-    
+
     // why doesn't this line work?
-    //in.close();
+    // in.close();
 
     return index - 1;
   }

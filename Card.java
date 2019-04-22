@@ -1,5 +1,5 @@
 public class Card implements Comparable<Card> {
-  
+
   private Rank rank;
   private Suit suit;
 
@@ -19,15 +19,15 @@ public class Card implements Comparable<Card> {
   public boolean isHeart() {
     return getSuit().equals(Suit.HEARTS);
   }
-  
+
   public boolean isQueenOfSpades() {
     return equals(Deck.QUEEN_OF_SPADES);
   }
-  
+
   public boolean isPointCard() {
     return isHeart() || isQueenOfSpades();
   }
-  
+
   @Override
   public String toString() {
     return rank.toString() + suit.toString();

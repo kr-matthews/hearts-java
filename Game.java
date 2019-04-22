@@ -15,9 +15,9 @@ public class Game {
   }
 
   public boolean isGameOver() {
-    return cumulativeHistory.getMaxScore() >= 100;
-    // temp line
-    // return cumulativeHistory.getRoundNumber() > 1;
+    // game ends when there exists a player in triple digits,
+    // as long as there is a unique winner
+    return cumulativeHistory.getMaxScore() >= 100 & winners().size() == 1;
   }
 
   public Game(String player1, String player2, String player3, String player4) {
@@ -67,8 +67,8 @@ public class Game {
     displayHistory();
   }
 
-  public boolean playerWins(int player) {
-    return isGameOver() & cumulativeHistory.getCurrentScore().getScore(player) == winningScore();
+  public boolean isPlayerWinning(int player) {
+    return cumulativeHistory.getCurrentScore().getScore(player) == winningScore();
   }
 
   private int winningScore() {
@@ -80,7 +80,7 @@ public class Game {
   public List<Integer> winners() {
     List<Integer> winnerList = new ArrayList<Integer>(4);
     for (int player = 0; player < 4; player++) {
-      if (playerWins(player)) {
+      if (isPlayerWinning(player)) {
         winnerList.add(player);
       }
     }

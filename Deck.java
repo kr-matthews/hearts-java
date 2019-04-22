@@ -3,10 +3,10 @@ import java.util.Collections;
 
 public class Deck extends ArrayList<Card> {
 
-  public static final Card TWO_OF_CLUBS = new Card(Rank.N2,Suit.CLUBS);
+  public static final Card TWO_OF_CLUBS = new Card(Rank.N2, Suit.CLUBS);
 
-  public static final Card QUEEN_OF_SPADES = new Card(Rank.Q,Suit.SPADES);
-  
+  public static final Card QUEEN_OF_SPADES = new Card(Rank.Q, Suit.SPADES);
+
   public Deck() {
     super(52);
 
@@ -18,8 +18,8 @@ public class Deck extends ArrayList<Card> {
 
     Collections.shuffle(this);
     // temp 2 lines
-    //System.out.println();
-    //System.out.println("(temp) Deck is: " + this);
+    // System.out.println();
+    // System.out.println("(temp) Deck is: " + this);
   }
 
 }
