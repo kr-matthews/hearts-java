@@ -132,15 +132,18 @@ class Round {
   // this feels like the wrong way/place to do/put a strategy
   // really it also needs the current score in addition to these arguments
   // these shouldn't have access to other player's hands
-  // TODO: improve computer strategy
+  // TODO: improve computer strategy (currently plays random valid card)
   private Card computerStrategy(int player, Hand playerHand, RoundScore roundScores2) {
-    Card cardToPlay = Deck.TWO_OF_CLUBS;
-    for (Card card : playerHand) {
+    Hand shuffledHand = (Hand) playerHand.clone();
+    Collections.shuffle(shuffledHand);
+    for (Card card : shuffledHand) {
       if (validCardToPlay(player, card, false)) {
-        cardToPlay = card;
+        return card;
       }
     }
-    return cardToPlay;
+    // will never get here
+    System.err.println("Hand didn't have a valid card, something is broken.");
+    return Deck.TWO_OF_CLUBS;
   }
 
   // check if player is allowed to play selected card
