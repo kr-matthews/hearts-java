@@ -1,81 +1,120 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
-  private String[] players = new String[4];
-  private boolean gameOver = false;
+  // names of players, set by constructor
+  private String[] playerNames = new String[4];
+  // contains the information of all previous rounds
+  private CumulativeHistory cumulativeHistory = new CumulativeHistory();
+  // the current round
+  private Round currentRound;
 
-  private List<List<Integer>> gameScoresHistory = null;
-  private int[] gameScores = { 0, 0, 0, 0 };
-
-  public List<List<Integer>> getGameScoresHistory() {
-    return gameScoresHistory;
-  }
-
-  public void setGameScoresHistory(List<List<Integer>> gameScoresHistory) {
-    this.gameScoresHistory = gameScoresHistory;
-  }
-
-  public String[] getPlayers() {
-    return players;
-  }
-
-  public void setPlayers(String[] players) {
-    this.players = players;
+  public String getPlayerName(int player) {
+    return playerNames[player];
   }
 
   public boolean isGameOver() {
-    return gameOver;
+    // game ends when there exists a player in triple digits,
+    // as long as there is a unique winner
+    return cumulativeHistory.getMaxScore() >= 100 & winners().size() == 1;
   }
-
-  public void setGameOver(boolean gameOver) {
-    this.gameOver = gameOver;
-  }
-
-  public int[] getGameScores() {
-    return gameScores;
-  }
-
-  public void setGameScores(int[] gameScores) {
-    this.gameScores = gameScores;
-  }
-
-  // private Round currentRound = new Round(new Deck());
 
   public Game(String player1, String player2, String player3, String player4) {
-    players[0] = player1;
-    players[1] = player2;
-    players[2] = player3;
-    players[3] = player4;
+    playerNames[0] = player1;
+    playerNames[1] = player2;
+    playerNames[2] = player3;
+    playerNames[3] = player4;
   }
 
   public Game(String player1) {
+    // default names of opponents:
     this(player1, "West", "North", "East");
   }
 
   public Game() {
+    // default name of user
     this("You");
   }
 
   public void playRound() {
-    Round round = new Round(new Deck());
-    int trickWinner = -1;
+    // the process of playing a round (dealing out 4 hands, playing 13 tricks,
+    // tallying scores, updating game history)
+    currentRound = new Round(new Deck());
+
+    // pass 3 cards left/right/across/nowhere/...
+    currentRound.passThreeCards(cumulativeHistory.getRoundNumber());
+
+    // the player to start the next trick is the one who won the previous trick
+    // (for the first hand, this will be whoever has the 2 of CLUBS)
+    int nextToPlay = -1;
     for (int player = 0; player < 4; player++) {
-      if (round.getPlayerHand(player).contains(new Card(2, Suit.SPADES))) {
-        trickWinner = player;
+      if (currentRound.getPlayerHand(player).contains(new Card(Rank.N2, Suit.CLUBS))) {
+        nextToPlay = player;
       }
     }
 
-    while (!round.isRoundOver()) {
-      round.playtrick(this, trickWinner);
-
-      // temp
-      round.roundIsOver();
+    while (!currentRound.isRoundOver()) {
+      // while the round is not over (players still have cards (13 tricks)), play a
+      // trick
+      currentRound.playtrick(nextToPlay, playerNames);
+      // want the below to be inside the above method, but that's problematic
+      nextToPlay = currentRound.currentTrickWinner();
     }
 
-    System.err.println("TODO: update scores");
-    // temp
-    gameOver = true;
+    cumulativeHistory.addRoundScore(currentRound.getRoundScores());
+    System.out.println();
+    displayHistory();
+  }
+
+  public boolean isPlayerWinning(int player) {
+    return cumulativeHistory.getCurrentScore().getScore(player) == winningScore();
+  }
+
+  private int winningScore() {
+    CumulativeScore currentScores = cumulativeHistory.getCurrentScore();
+    return Math.min(Math.min(currentScores.getScore(0), currentScores.getScore(1)),
+        Math.min(currentScores.getScore(2), currentScores.getScore(3)));
+  }
+
+  public List<Integer> winners() {
+    List<Integer> winnerList = new ArrayList<Integer>(4);
+    for (int player = 0; player < 4; player++) {
+      if (isPlayerWinning(player)) {
+        winnerList.add(player);
+      }
+    }
+    return winnerList;
+  }
+
+  // feels messy
+  public void displayWinners() {
+    System.out.print("\nWinner");
+    if (winners().size() > 1) {
+      System.out.print("s");
+    }
+    System.out.print(": ");
+    for (int player : winners()) {
+      System.out.print(getPlayerName(player));
+      if (player != winners().get(winners().size() - 1)) {
+        System.out.print(" & ");
+      }
+    }
+    if (winners().contains(0)) {
+      System.out.print("!");
+    }
+    System.out.println();
+  }
+
+  // TODO: improve formatting
+  public void displayHistory() {
+    for (String player : playerNames) {
+      System.out.print(player + "  ");
+    }
+    System.out.println();
+    for (CumulativeScore scores : cumulativeHistory) {
+      System.out.println(scores);
+    }
   }
 
 }
