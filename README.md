@@ -1,5 +1,6 @@
 # Hearts-java
-Creating the card game Hearts in the programming language Java.
+
+This was my first project in Java: Creating the card game [Hearts](https://en.wikipedia.org/wiki/Hearts_(card_game)).
 
 After getting most of this up and running (still some features missing, but you can play a slightly reduced game), I started again from scratch.
-See github.com/kr-matthews/hearts-java-v2.
+See [hearts-java-v2](https://github.com/kr-matthews/hearts-java-v2).
