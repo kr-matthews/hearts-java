@@ -1,4 +1,4 @@
-# Hearts-java
+# hearts-java
 
 This was my first project in Java: Creating the card game [Hearts](https://en.wikipedia.org/wiki/Hearts_(card_game)).
 
